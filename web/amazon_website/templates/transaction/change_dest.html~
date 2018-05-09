@@ -1,0 +1,16 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<h2 align="center">Change destination for order: {{order.pk}}</h2>
+<br/>
+<br/>
+<h2> current address :{{order.x}},{{order.y}} </h2>
+<p>
+  <form method="POST">
+    {% csrf_token %}
+    {{ address_form.as_p }}
+    <input type="submit" value="Change" name="change" class="btn btn-info"/>
+    <input type="submit" value="Back" name="back", class="btn btn-info"/>
+    <input type="hidden" name="next" value="{{ request.path }}">
+  </form>
+</p>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<h2 align="center">Items in cart</h2>
+<br/>
+<br/>
+<table class="table" style="table-layout:fixed; width:100%">
+  <tr>
+    <td>
+      <b><i>Product Name : </i></b>
+    </td>
+    <td>
+      <b><i>Quantity : </i></b>
+    </td>
+    <td>
+      <b><i>Price : {{price}}</i></b>
+    </td>
+  </tr>
+  {% for product in products %}
+  <tr>
+    <td>
+      <b><a href="/product_page/{{ product.product_id.pk }}">
+	{{ product.product_id.name }}
+      </a></b>
+    </td>
+    <td>
+      {{ product.num_product }}
+    </td>
+    <td>
+      <b><a href="/delete_cart/{{ product.product_id.pk }}">
+	Delete from cart
+      </a></b>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+<p>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Checkout" name="Checkout" class="btn btn-info"/>
+    <input type="submit" value="Back" name="back", class="btn btn-info"/>
+    <input type="hidden" name="next" value="{{ request.path }}">
+  </form>
+</p>
+<p>
+  <form method="POST">
+    {% csrf_token %}
+    {{ couponform.as_p }}
+    <input type="submit" value="Apply Coupon" name="coupon" class="btn btn-info"/>
+  </form>
+</p>
+
+{% endblock %}

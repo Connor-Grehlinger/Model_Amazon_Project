@@ -1,0 +1,67 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<h2 align="center">Orders</h2>
+<br/>
+<br/>
+{% for order, detail in order_contents %}
+<table class="table" style="table-layout:fixed; width:100%">
+  <tr>
+    <td>
+      <b><i>Order Id : </i></b>
+    </td>
+    <td>
+      <b><i>Order Status : </i></b>
+    </td>
+    <td>
+      <b><i>Tracking No: </i></b>
+    </td>
+    <td >
+      <b><i>Order Address: </i></b>
+    </td>
+    <td>
+      {% if order.status|stringformat:"s" == "In warehouse" %}
+      <a href="/change_destination/{{ order.pk }}">
+	<b><i>Change Destination</i></b>
+      </a>
+      {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b><i>{{order.pk}} </i></b>
+    </td>
+    <td>
+      <b><i>{{order.status}}</i></b>
+    </td>
+    <td>
+      <b><i>{{order.tracking_no}} (UPS Account: {{order.ups_account}})</i></b>
+    </td>
+    <td>
+      <b><i>{{order.x_coordinate}} , {{order.y_coordinate}}</i></b>
+    </td>
+    <td>
+      <b><i>Price: {{order.price}}</i></b>
+    </td>
+  </tr>
+  {% for item in detail%}
+  <tr>
+    <td colspan="2">
+      <b><a href="/product_page/{{ item.product_id.pk }}">
+	  {{ item.product_id.name }}
+      </a></b>
+    </td>
+    <td colspan="3">
+      Quantity: {{ item.num_product }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endfor %}
+<p>
+  <form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Back" name="back", class="btn btn-info"/>
+    <input type="hidden" name="next" value="{{ request.path }}">
+  </form>
+</p>
+{% endblock %}

@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+    amazon_db:
+        image: postgres
+        environment:
+           POSTGRES_DB: postgres
+           POSTGRES_USER: postgres
+           POSTGRES_PASSWORD: youshallnotpass
+        volumes:
+            - data-volume:/var/lib/postgresql/9.5/main
+        ports:
+            - "5432:5432"
+
+    amazon_daemon:
+        build: ./amazon_daemon
+        volumes:
+            - "./amazon_daemon:/amazon_daemon"
+        ports:
+            - "23456:23456"
+            - "34567:34567"
+        tty: true
+        depends_on:
+            - amazon_db
+            - nginx
+        command: bash -c "make all && sleep 30 && ./server"
+
+
+    amazon_web:
+        build: ./web/amazon_website
+        user: nobody 
+        command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+        volumes:
+            - ./web/amazon_website:/code
+        expose:
+            - "8000"
+        depends_on:
+            - amazon_db
+    nginx:
+        image: nginx:latest
+        ports:
+            - "8000:8000"
+        volumes:
+            - ./web/nginx/config:/etc/nginx/conf.d
+        depends_on:
+            - amazon_web
+
+volumes:
+    data-volume:
+
+

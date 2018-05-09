@@ -1,0 +1,43 @@
+{% extends 'home/base.html' %}
+{% block content %}
+
+<table class="table" style="table-layout:fixed; width:100%">
+  <tr>
+    <td>
+      <b><i>Product Name : </i></b>
+    </td>
+    <td>
+      <b><i> {{ product.name }}</i></b>
+    </td>
+  </tr>
+   <tr>
+    <td>
+      <b><i>Product Description : </i></b>
+    </td>
+    <td>
+      <b><i> {{ product.description }}</i></b>
+    </td>
+   </tr>
+    <tr>
+    <td>
+      <b><i>Seller : </i></b>
+    </td>
+    <td>
+      <b><i> {{ product.seller}}</i></b>
+    </td>
+  </tr>
+</table>
+{% if user.is_authenticated%}
+<form method="POST">
+  {% csrf_token %} {{ form.as_p }}
+      <button type="submit" class="btn btn-info" >Add to Cart</button>
+</form>
+{% endif %}
+<p>
+  <form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Back" name="back", class="btn btn-info"/>
+  </form>
+</p>
+
+{% endblock %}

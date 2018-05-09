@@ -1,0 +1,59 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<style>
+  td.wrapword{
+  white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+  white-space: -webkit-pre-wrap; /*Chrome & Safari */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  white-space: pre-wrap;       /* css-3 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  word-break: break-all;
+  white-space: normal;
+  }
+</style>
+{% if plist %}
+<form method="POST"> {% csrf_token %}
+  <table>
+    {{form.as_p}}
+    <tr colspan="2">
+      <button type="submit" value="Search", name="search" class="btn btn-info">Search</button>
+    </tr>
+  </table>
+</form>
+<table class="table" style="table-layout:fixed; width:100%">
+  <tr>
+    <td>
+      <b><i>Product Name</i></b>
+    </td>
+    <td>
+      <b><i>Seller</i></b>
+    </td>
+    <td>
+      <b><i>In Stock: </i></b>
+    </td>
+    <td>
+      <b><i>Price: </i></b>
+    </td>
+  </tr>
+  {% for product in plist %}
+  <tr>
+    <td>
+      <b><a href="/product_page/{{ product.pk }}">
+	{{ product.name }}
+      </a></b>
+    </td>
+    <td>
+      {{ product.seller }}
+    </td>
+    <td>
+      {{ product.max_amount }}
+    </td>
+    <td>
+      {{ product.price }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+{% endblock %}

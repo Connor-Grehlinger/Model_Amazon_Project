@@ -1,0 +1,13 @@
+{% extends 'home/base.html' %}
+{% block content %}
+
+<form method="post">
+  {% csrf_token %}
+  {{ user_form.as_p }}
+
+  <input type="submit" class="btn btn-info" name="saveProfile" value="Save Changes">
+  <input type="submit" class="btn btn-info" name="back" value="Back">
+  <!--<button type="submit">Back</button>-->
+</form>
+
+{% endblock%}
