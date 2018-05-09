@@ -8,6 +8,7 @@ Connor Grehlinger, Arda Icmez
 
 
 This project encorporates the following programming concepts:
+
 -> Python3 & Django 
 
 -> Client-Server communication via google protocol buffers 
