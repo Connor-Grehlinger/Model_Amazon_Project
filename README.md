@@ -27,6 +27,7 @@ daemon. The amazon daemon then connects to the world simulator runnning
 on the UPS server's host machine using the received world id.
 
 ^ Defunct, adding the world sim now for the purpose of github ref material
+
 Will be in world/ directory 
 
 
